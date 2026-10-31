@@ -108,51 +108,6 @@ npm pack --dry-run
 
 测试包含独立 Rehype 转换、真实 `astro build` fixture、`base: "/blog"`、最小资源输出，以及真实 `astro dev` SVG 请求。
 
-## 通过 GitHub Actions 发布到 npm
-
-仓库包含两个发布工作流：
-
-- `Bootstrap publish to npm`：仅用于第一次创建 npm 包，需要一个临时 `NPM_TOKEN`。
-- `Publish to npm`：之后在 GitHub Release 发布时运行，使用 npm Trusted Publishing（OIDC），不保存 npm Token。
-
-### 第一次发布
-
-1. 确保 GitHub 仓库 `xjn2005/astro-openmoji` 是公开仓库，并将当前项目推送到 `main`。
-2. 在 npm 创建一个短有效期、具备公开包发布权限的 Granular Access Token。若 npm 账户启用了发布 2FA，请按 npm 页面提示允许该自动化 Token 绕过发布 2FA。
-3. 打开 GitHub 仓库的 **Settings → Secrets and variables → Actions**，新增 Repository secret：`NPM_TOKEN`。
-4. 打开 **Actions → Bootstrap publish to npm → Run workflow**。它会依次执行安装、测试、构建、打包预检，并发布 `0.1.0`；不要重复运行同一版本。
-5. 在 npm 确认 `astro-openmoji` 已创建且包含 provenance 信息。
-
-首次工作流使用 `--provenance`，因此 GitHub 仓库必须公开。Token 不要写入文件、提交记录或工作流源码。
-
-### 切换到 Trusted Publishing
-
-首次发布成功后，在 npm 的 `astro-openmoji` 包设置中添加 GitHub Actions Trusted Publisher，填写：
-
-| 字段 | 值 |
-| --- | --- |
-| Organization or user | `xjn2005` |
-| Repository | `astro-openmoji` |
-| Workflow filename | `publish.yml` |
-| Environment | 留空 |
-
-保存后：
-
-1. 删除 GitHub Repository secret `NPM_TOKEN`。
-2. 禁用或删除 `.github/workflows/bootstrap-publish.yml`，避免误触首次发布流程。
-3. 在 Trusted Publisher 创建后的两天内完成一次正式 OIDC 发布验证；验证成功后，可在 npm 包设置中进一步禁止 Token 发布并要求 2FA。
-
-长期工作流只授予 `contents: read` 和 `id-token: write`，不会读取 npm Token。Trusted Publishing 会自动生成 npm provenance。
-
-### 发布后续版本
-
-1. 更新 `package.json` 和 `package-lock.json` 中的版本，例如运行 `npm version patch --no-git-tag-version`。
-2. 运行 `npm test`、`npm run build` 和 `npm pack --dry-run`，然后提交并推送版本改动。
-3. 为该提交创建匹配的标签，例如版本为 `0.1.1` 时使用 `v0.1.1`。
-4. 在 GitHub 创建并发布使用该标签的 Release。
-
-`Publish to npm` 会检出 Release 标签，并在发布前验证标签严格等于 `v${package.json.version}`。两者不一致时工作流会失败，不会发布。
-
 ## 许可证与署名
 
 `astro-openmoji` 插件代码使用 [MIT License](./LICENSE)。OpenMoji 图形资产由 OpenMoji 项目提供，使用 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)；详情见 [ATTRIBUTION.md](./ATTRIBUTION.md)。
