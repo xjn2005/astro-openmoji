@@ -1,5 +1,8 @@
 # astro-openmoji
 
+[![npm version](https://img.shields.io/npm/v/astro-openmoji.svg)](https://www.npmjs.com/package/astro-openmoji)
+[![Publish to npm](https://github.com/xjn2005/astro-openmoji/actions/workflows/publish.yml/badge.svg)](https://github.com/xjn2005/astro-openmoji/actions/workflows/publish.yml)
+
 在 Astro 构建 Markdown 时，把源码中的原生 Unicode Emoji 转换为本地 [OpenMoji](https://openmoji.org/) SVG。
 
 - Markdown 源文件保持不变
