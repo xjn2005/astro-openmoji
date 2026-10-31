@@ -1,0 +1,71 @@
+{
+  "name": "astro-openmoji",
+  "version": "0.1.0",
+  "description": "Render native Unicode emoji as local OpenMoji SVGs in Astro Markdown.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xjn2005/astro-openmoji.git"
+  },
+  "homepage": "https://github.com/xjn2005/astro-openmoji#readme",
+  "bugs": {
+    "url": "https://github.com/xjn2005/astro-openmoji/issues"
+  },
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "emoji",
+    "openmoji",
+    "rehype"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "ATTRIBUTION.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rehype": {
+      "types": "./dist/rehype.d.ts",
+      "import": "./dist/rehype.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.5",
+    "emoji-regex": "^11.0.0",
+    "openmoji": "^17.0.0",
+    "unified": "^11.0.5"
+  },
+  "peerDependencies": {
+    "astro": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/hast": "^3.0.5",
+    "@types/node": "^24.10.0",
+    "astro": "^7.4.4",
+    "rehype-parse": "^9.0.1",
+    "rehype-stringify": "^10.0.1",
+    "tsdown": "^0.23.4",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
