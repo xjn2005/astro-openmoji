@@ -37,7 +37,14 @@ describe("rehypeOpenmoji", () => {
     expect(html).toContain('alt="🚀"');
     expect(html).toContain('alt="😵‍💫"');
     expect(html).toContain('class="openmoji"');
-    expect(html).toContain("vertical-align:-0.125em");
+  });
+
+  test("uses readable defaults with CSS custom-property override hooks", async () => {
+    const html = await transform("<p>😓</p>");
+
+    expect(html).toContain(
+      'style="width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block"',
+    );
   });
 
   test("replaces text in headings, lists, quotes, and links without changing URLs", async () => {
@@ -66,6 +73,9 @@ describe("rehypeOpenmoji", () => {
 
     expect(imageSources(html)).toEqual(["/emoji/assets/1F680.svg"]);
     expect(html).toContain('class="emoji-icon"');
+    expect(html).toContain(
+      'style="width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block"',
+    );
   });
 
   test("leaves text untouched when no matching asset exists", async () => {

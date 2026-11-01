@@ -20,6 +20,9 @@ describe("Astro integration", () => {
     expect(html).toContain('/blog/openmoji/1F468-1F3FD-200D-1F4BB.svg');
     expect(html).toContain('/blog/openmoji/2764.svg');
     expect(html).toContain('/blog/openmoji/1F1E8-1F1F3.svg');
+    expect(html).toContain(
+      'style="width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block"',
+    );
     expect(html).toContain("inline 🐛");
     expect(html).toContain("block 🐛");
     expect(html).not.toContain("<script");

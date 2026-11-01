@@ -14,7 +14,8 @@ export interface TransformOpenmojiOptions {
 }
 
 const skippedElements = new Set(["code", "pre"]);
-const imageStyle = "width:1em;height:1em;vertical-align:-0.125em;display:inline-block";
+const imageStyle =
+  "width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block";
 
 export function transformOpenmojiTree(tree: Root, options: TransformOpenmojiOptions): void {
   transformChildren(tree, options);
