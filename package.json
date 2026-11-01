@@ -1,6 +1,6 @@
 {
   "name": "astro-openmoji",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Render native Unicode emoji as local OpenMoji SVGs in Astro Markdown.",
   "type": "module",
   "license": "MIT",
