@@ -42,13 +42,13 @@ export default defineConfig({
 ```html
 <p>
   今天学 CMake 学得有些
-  <img class="openmoji" src="/openmoji/1F635-200D-1F4AB.svg" alt="😵‍💫" style="width:1em;height:1em;vertical-align:-0.125em;display:inline-block">
+  <img class="openmoji" src="/openmoji/1F635-200D-1F4AB.svg" alt="😵‍💫" style="width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block">
   ，但总算跑通了
-  <img class="openmoji" src="/openmoji/1F680.svg" alt="🚀" style="width:1em;height:1em;vertical-align:-0.125em;display:inline-block">
+  <img class="openmoji" src="/openmoji/1F680.svg" alt="🚀" style="width:var(--openmoji-size,1.25em);height:var(--openmoji-size,1.25em);vertical-align:var(--openmoji-vertical-align,-0.22em);display:inline-block">
 </p>
 ```
 
-`alt` 始终保留原 Emoji。内联样式只负责把一 em 大小的图片与文字基线自然对齐。
+`alt` 始终保留原 Emoji。内联样式默认以 `1.25em` 渲染图片并对齐文字基线；尺寸仍跟随当前字体缩放，不会引入客户端 JavaScript。
 
 ## 配置项
 
@@ -65,6 +65,24 @@ openmoji({
 | `style` | `"color" \| "black"` | `"color"` | 使用 OpenMoji 彩色或黑色 SVG |
 | `assetDir` | `string` | `"openmoji"` | 输出目录和公共 URL 路径，可使用 `emoji/assets` 这样的相对路径 |
 | `className` | `string` | `"openmoji"` | 生成的 `<img>` 使用的单个 CSS 类名 |
+
+### 尺寸与对齐
+
+OpenMoji 图形在 SVG 画布内通常带有留白，因此插件默认使用 `1.25em`，让可见图形更接近原生 Emoji 的视觉高度。可以通过 CSS 自定义属性调整生成图片，不需要使用 `!important`：
+
+```css
+.openmoji {
+  --openmoji-size: 1.1em;
+  --openmoji-vertical-align: -0.15em;
+}
+```
+
+| CSS 自定义属性 | 默认值 | 说明 |
+| --- | --- | --- |
+| `--openmoji-size` | `1.25em` | 同时控制生成图片的宽度和高度 |
+| `--openmoji-vertical-align` | `-0.22em` | 控制图片相对文字基线的垂直位置 |
+
+如果需要恢复旧版外观，可设置 `--openmoji-size: 1em` 和 `--openmoji-vertical-align: -0.125em`。使用自定义 `className` 时，将这些变量设置在对应类名上即可。
 
 Astro 的 `base` 会自动加入图片 URL。例如 `base: "/blog"` 时，图片地址为 `/blog/openmoji/1F680.svg`，资源仍输出到 `dist/openmoji/`。
 
